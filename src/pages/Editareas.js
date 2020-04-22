@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import todoapp from '../lib/todoservice';
-
+import { Link } from 'react-router-dom';
 
 class Editareas extends Component {
     constructor() {
@@ -16,7 +16,6 @@ class Editareas extends Component {
         const { title, body } = this.state;
         const id = this.props.match.params.id;
         todoapp.editTareas({ id, title, body });
-        this.props.history.push("/")
     }
 
 
@@ -48,11 +47,14 @@ render(){
             onChange={this.handleChange}
           />
   
-  
+        
           <input
             type="submit"
-            value="Crear Tarea"
+            value="Editar Tarea"
           />
+          <Link to="/">
+          Vuelve a homepage
+          </Link>
         </form>
       </div>
       </>
