@@ -3,22 +3,24 @@ import todoapp from '../lib/todoservice';
 
 
 class Editareas extends Component {
-    constructor(props) {
-      super(props);
+    constructor() {
+      super();
       this.state = {
-        id: props.match.params.id,
         title: "",
         body: ""
       };
-}
+  }
 
-    handleFormSubmit(){
+    handleFormSubmit = async (event) =>{
+        event.preventDefault();
         const { title, body } = this.state;
-        todoapp.editTareas({ title, body });
+        const id = this.props.match.params.id;
+        todoapp.editTareas({ id, title, body });
         this.props.history.push("/")
     }
 
-    handlechange( event ) {
+
+    handleChange = (event) => {
         const { name, value } = event.target;
         this.setState({ [name]: value });
     }
@@ -26,35 +28,34 @@ class Editareas extends Component {
 
 render(){
     const { title, body } = this.state
-
     return (
-        <>
-            <form onSubmit={this.handleFormSubmit} className="display">
-            <label>Nombre de evento:</label>
-            <input
-              type="text"
-              name="title"
-              value={title}
-              onChange={this.handleChange}
-            />
-
-            <label>Descripción de la tarea:</label>
-            <input
-              type="text"
-              name="body"
-              value={body}
-              onChange={this.handleChange}
-            />
-
-
-            <input
-              type="submit"
-              value="Crear Tarea"
-            />
-          </form>
-
-
-        </>
+      <>
+      <div>
+        <form onSubmit={this.handleFormSubmit} className="display">
+          <label>Nombre de evento:</label>
+          <input
+            type="text"
+            name="title"
+            value={title}
+            onChange={this.handleChange}
+          />
+  
+          <label>Descripción de la tarea:</label>
+          <input
+            type="text"
+            name="body"
+            value={body}
+            onChange={this.handleChange}
+          />
+  
+  
+          <input
+            type="submit"
+            value="Crear Tarea"
+          />
+        </form>
+      </div>
+      </>
     )
 }
 }

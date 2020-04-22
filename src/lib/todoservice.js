@@ -17,7 +17,7 @@ class Todoapp {
     getTareas() {
         return this.todoapp
         .get(`/todos`)
-        .then((data) => (data))
+        .then((res) => res.data)
         .catch ((err) =>console.log("error from edit evento:", err) )
     }
 
@@ -28,9 +28,9 @@ class Todoapp {
         .catch ((err) =>console.log("error from edit evento:", err) )
     }
 
-    editTareas = (id) => {
+    editTareas = ({id, title, body}) => {
         return this.todoapp
-            .put(`/todos/${id}`)
+            .put(`/todos/${id}`, {title, body})
             .then((data) => (data))
             .catch((err) => console.log("error from evento:", err));
     }

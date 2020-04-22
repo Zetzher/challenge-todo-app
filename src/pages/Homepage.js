@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import todoapp from '../lib/todoservice';
+import axios from 'axios';
 
 class Homepage extends Component {
     constructor() {
@@ -10,7 +11,8 @@ class Homepage extends Component {
         title: "",
         body: "",
         titleedit: "",
-        bodyedit: ""
+        bodyedit: "",
+        todo: []
       };
     }
 
@@ -25,73 +27,87 @@ class Homepage extends Component {
         todoapp.postTareas({ title, body });
       };
 
+      
+
     getTareas = () =>{
     todoapp
     .getTareas()
     .then((data) => 
     
-        this.setState({
-            id: data._id,
-            nombre: data.title,
-            body: data.body
-        })
-        )
-    }
+      this.setState({
+        todo: data
+      })
+      ) 
+      }
 
     deleteElement(id){
         todoapp.deleteTareas(id)
     }
 
-
+componentDidMount(){
+  this.getTareas()
+}
 
 
 render(){
     const { title, body } = this.state
-    const { id } = this.state
-    return (
-       <>
-        <div>
-          <form onSubmit={this.handleFormSubmit} className="display">
-            <label>Nombre de evento:</label>
-            <input
-              type="text"
-              name="title"
-              value={title}
-              onChange={this.handleChange}
-            />
+    const { todo } = this.state
+    
+    return(
+      <>
+      <>
+    <div>
+      <form onSubmit={this.handleFormSubmit} className="display">
+        <label>Nombre de evento:</label>
+        <input
+          type="text"
+          name="title"
+          value={title}
+          onChange={this.handleChange}
+        />
 
-            <label>Descripción de la tarea:</label>
-            <input
-              type="text"
-              name="body"
-              value={body}
-              onChange={this.handleChange}
-            />
+        <label>Descripción de la tarea:</label>
+        <input
+          type="text"
+          name="body"
+          value={body}
+          onChange={this.handleChange}
+        />
 
 
-            <input
-              type="submit"
-              value="Crear Tarea"
-            />
-          </form>
-        </div>
-
-        <div className="display-tareas">
-            <h1>Tareas traidas de la API:</h1>
-            <h4>{this.state.titleedit}</h4>
-            <h4>{this.state.bodyedit}</h4>
-            <Link to={`/see/${id}`}>
-                <button>Mire esta tarea</button>
-            </Link>
-            <Link to={`/edit/${id}`}>
-                <button>Edita esta tarea</button>
-            </Link>
-            <button className="estilo-botones-evento" onClick={(e) => this.deleteElement(this.state._id)}>
-            Borrar evento
-          </button>
-        </div>
+        <input
+          type="submit"
+          value="Crear Tarea"
+        />
+      </form>
+    </div>
     </>
-    )}
+    {todo.map((datos) =>{
+      return (
+         <>
+        
+          <div className="display-tareas">
+              <h1>Tareas traidas de la API:</h1>
+              <h4>{datos.title}</h4>
+              <h4>{datos.body}</h4>
+              <Link to={`/see/${datos._id}`}>
+                  <button>Mire esta tarea</button>
+              </Link>
+              <Link to={`/edit/${datos._id}`}>
+                  <button>Edita esta tarea</button>
+              </Link>
+              <button className="estilo-botones-evento" onClick={(e) => this.deleteElement(datos._id)}>
+              Borrar evento
+            </button>
+          </div>
+      </>
+      
+      )})}</>
+    )
+   
+  
+  }
 }
 
 export default Homepage
+
