@@ -19,6 +19,24 @@
   color: white;
 }
 
+.display {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.display input {
+  border: 1px black solid;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.display-tareas {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .App-link {
   color: #61dafb;
 }
