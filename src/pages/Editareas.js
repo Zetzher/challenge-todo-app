@@ -15,7 +15,8 @@ class Editareas extends Component {
         event.preventDefault();
         const { title, body } = this.state;
         const id = this.props.match.params.id;
-        todoapp.editTareas({ id, title, body });
+        await todoapp.editTareas({ id, title, body });
+        this.props.history.push(`/see/${this.props.match.params.id}`)
     }
 
 
@@ -52,9 +53,6 @@ render(){
             type="submit"
             value="Editar Tarea"
           />
-          <Link to="/">
-          Vuelve a homepage
-          </Link>
         </form>
       </div>
       </>
