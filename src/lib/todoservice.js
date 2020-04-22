@@ -8,6 +8,12 @@ class Todoapp {
         });
     }
 
+    getThatTarea(id) {
+        return this.todoapp
+        .get(`/todos/${id}`)
+        .then((data) => (data))
+    }
+
     getTareas() {
         return this.todoapp
         .get(`/todos`)

@@ -80,6 +80,9 @@ render(){
             <h1>Tareas traidas de la API:</h1>
             <h4>{this.state.titleedit}</h4>
             <h4>{this.state.bodyedit}</h4>
+            <Link to={`/see/${id}`}>
+                <button>Mire esta tarea</button>
+            </Link>
             <Link to={`/edit/${id}`}>
                 <button>Edita esta tarea</button>
             </Link>
